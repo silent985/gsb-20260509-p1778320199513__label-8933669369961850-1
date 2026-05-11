@@ -51,9 +51,17 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useAccountStore } from '../stores/account'
+import { useTransactionStore } from '../stores/transaction'
+import { useCategoryStore } from '../stores/category'
+import { useStatisticsStore } from '../stores/statistics'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const accountStore = useAccountStore()
+const transactionStore = useTransactionStore()
+const categoryStore = useCategoryStore()
+const statisticsStore = useStatisticsStore()
 
 const sidebarCollapsed = ref(false)
 const user = computed(() => authStore.user)
@@ -72,6 +80,10 @@ function toggleSidebar() {
 }
 
 function handleLogout() {
+  accountStore.clear()
+  transactionStore.clear()
+  categoryStore.clear()
+  statisticsStore.clear()
   authStore.logout()
   router.push('/login')
 }
