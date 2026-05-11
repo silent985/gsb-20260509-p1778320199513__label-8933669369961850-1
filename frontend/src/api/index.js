@@ -1,5 +1,9 @@
 import axios from 'axios'
 import { useAuthStore } from '../stores/auth'
+import { useAccountStore } from '../stores/account'
+import { useTransactionStore } from '../stores/transaction'
+import { useCategoryStore } from '../stores/category'
+import { useStatisticsStore } from '../stores/statistics'
 import router from '../router'
 
 const api = axios.create({
@@ -9,6 +13,20 @@ const api = axios.create({
     'Content-Type': 'application/json'
   }
 })
+
+function clearAllStores() {
+  const accountStore = useAccountStore()
+  const transactionStore = useTransactionStore()
+  const categoryStore = useCategoryStore()
+  const statisticsStore = useStatisticsStore()
+  const authStore = useAuthStore()
+  
+  accountStore.clear()
+  transactionStore.clear()
+  categoryStore.clear()
+  statisticsStore.clear()
+  authStore.logout()
+}
 
 // Request interceptor
 api.interceptors.request.use(
@@ -29,8 +47,7 @@ api.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
-      const authStore = useAuthStore()
-      authStore.logout()
+      clearAllStores()
       router.push('/login')
     }
     return Promise.reject(error)
