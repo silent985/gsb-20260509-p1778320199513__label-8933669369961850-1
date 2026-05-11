@@ -36,6 +36,13 @@ export const useStatisticsStore = defineStore('statistics', () => {
     return response.data.data.dailyTrend
   }
 
+  function $reset() {
+    overview.value = null
+    categoryStats.value = null
+    monthlyTrend.value = null
+    loading.value = false
+  }
+
   return {
     overview,
     categoryStats,
@@ -44,6 +51,7 @@ export const useStatisticsStore = defineStore('statistics', () => {
     fetchOverview,
     fetchCategoryStats,
     fetchMonthlyTrend,
-    fetchDailyTrend
+    fetchDailyTrend,
+    $reset
   }
 })

@@ -45,6 +45,13 @@ export const useCategoryStore = defineStore('category', () => {
     await fetchCategories()
   }
 
+  function $reset() {
+    categories.value = []
+    incomeCategories.value = []
+    expenseCategories.value = []
+    loading.value = false
+  }
+
   return {
     categories,
     incomeCategories,
@@ -54,6 +61,7 @@ export const useCategoryStore = defineStore('category', () => {
     fetchCategoriesByType,
     createCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    $reset
   }
 })
