@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import api from '../api'
+import { useAccountStore } from './account'
+import { useTransactionStore } from './transaction'
+import { useCategoryStore } from './category'
+import { useStatisticsStore } from './statistics'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || '')
@@ -31,6 +35,11 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+
+    useAccountStore().$reset()
+    useTransactionStore().$reset()
+    useCategoryStore().$reset()
+    useStatisticsStore().$reset()
   }
 
   async function fetchUser() {
