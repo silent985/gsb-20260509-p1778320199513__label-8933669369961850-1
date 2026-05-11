@@ -34,12 +34,18 @@ export const useAccountStore = defineStore('account', () => {
     await fetchAccounts()
   }
 
+  function reset() {
+    accounts.value = []
+    loading.value = false
+  }
+
   return {
     accounts,
     loading,
     fetchAccounts,
     createAccount,
     updateAccount,
-    deleteAccount
+    deleteAccount,
+    reset
   }
 })
