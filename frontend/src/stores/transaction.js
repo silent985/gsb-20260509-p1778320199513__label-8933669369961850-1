@@ -47,6 +47,12 @@ export const useTransactionStore = defineStore('transaction', () => {
     await fetchTransactions(pagination.value.page, pagination.value.size)
   }
 
+  function clear() {
+    transactions.value = []
+    pagination.value = { page: 0, size: 20, totalPages: 0, totalElements: 0 }
+    loading.value = false
+  }
+
   return {
     transactions,
     pagination,
@@ -55,6 +61,7 @@ export const useTransactionStore = defineStore('transaction', () => {
     fetchTransactionsByDateRange,
     createTransaction,
     updateTransaction,
-    deleteTransaction
+    deleteTransaction,
+    clear
   }
 })
